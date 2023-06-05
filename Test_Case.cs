@@ -1,9 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hastane_Otomasyonu;
+using System.Windows.Forms;
 using NUnit.Framework;
 
 
@@ -20,6 +22,7 @@ namespace TC_numarasi
     kullanıcı girişi testi
     personel girişi testi
     kayıt olma testi.
+    doktor ekleme testi.
 
     4/4 başarılı.
      */
@@ -84,5 +87,27 @@ namespace TC_numarasi
             Assert.AreEqual(komut.ExecuteNonQuery(), 1);
             baglanti.Close();
         }
+
+        [Test]
+        public void doktor_ekleme()
+        {
+            OleDbConnection baglanti = new OleDbConnection("provider=microsoft.jet.oledb.4.0; data source=database.mdb");
+            baglanti.Open();
+            OleDbCommand komut = new OleDbCommand("insert into doktorekle(Ad_Soyad,Cinsiyet,Doğum_Yeri,Doğum_Tarihi,Tel_No,Email,Poliklinik,polID) values(@Ad_Soyad,@Cinsiyet,@dogumyeri,@Doğum_Tarihi,@Tel_No,@Email,@Poliklinik,@polID)", baglanti);
+            komut.Parameters.AddWithValue("@Ad_Soyad","");
+            komut.Parameters.AddWithValue("@Cinsiyet", "");
+            komut.Parameters.AddWithValue("@Doğum_Yeri",  "");
+            komut.Parameters.AddWithValue("@Dogum_Tarihi",  "");
+            komut.Parameters.AddWithValue("@Tel_No", "");
+            komut.Parameters.AddWithValue("@Email", "");
+            komut.Parameters.AddWithValue("@Poliklinik",  "");
+            komut.Parameters.AddWithValue("@polID",  "");
+            Assert.AreEqual(komut.ExecuteNonQuery(),1);
+            baglanti.Close();
+           
+            
+        }
+
+
     }
 }
